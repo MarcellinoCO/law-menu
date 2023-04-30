@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  menu-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: menu1234
+      POSTGRES_PASSWORD: menu1234
+      POSTGRES_DB: menu
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  menu-service:
+    build:
+      context: ./menu
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - menu-db
+
+volumes:
+  db_data:
